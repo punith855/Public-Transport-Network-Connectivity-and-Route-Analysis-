@@ -1,0 +1,90 @@
+source,destination,distance,bus_number
+Majestic,City Market,2.1,356-M / KBS-3A / 215H
+City Market,Chamrajpet,2.0,34C / 43
+Chamrajpet,Basavanagudi,2.2,43 / 45
+Basavanagudi,Jayanagar,2.5,2 / 210A
+Jayanagar,Banashankari,2.8,210A / 215C
+Banashankari,Kumaraswamy Layout,2.4,210E / 210U
+Kumaraswamy Layout,ISRO Layout,1.8,210U
+Banashankari,JP Nagar,3.1,215C / 600F
+JP Nagar,BTM Layout,2.9,600F / 500D
+BTM Layout,Silk Board,2.2,600F / 500D
+Silk Board,Electronic City,8.5,356-M / 356CW / 600F
+Electronic City,Hebbagodi,3.6,356-M / 360 / 361C
+Hebbagodi,Bommasandra,2.8,356-M / 360 / 361C
+Bommasandra,Chandapura,3.2,356-M / 360 / 361C
+Chandapura,Surya City,1.1,356-M / 356-Z / 360B / 361C
+Surya City,Iggalur,1.3,356-M / 356-Z / 360B / 361C
+Iggalur,Ramakrishnapura,1.0,356-M / 356-Z / 360B / 361C
+Ramakrishnapura,Marsur Gate,1.4,356-M / 356-Z / 360B / 361C
+Marsur Gate,Byagadadenahalli,1.2,356-M / 356-Z / 360B / 361C
+Byagadadenahalli,Karpur Gate,1.1,356-M / 356-Z / 360B / 361C
+Karpur Gate,Anekal,1.0,356-M / 356-Z / 360B / 361C
+Chandapura,Heelalige Cross,1.8,399-A / 399-D
+Heelalige Cross,Ramasagara,1.5,399-A / 399-D
+Ramasagara,Singena Agrahara,2.0,399-A / 399-D
+Singena Agrahara,Muthanallur Cross,2.3,399-A / 399-D
+Muthanallur Cross,Chokkasandra Cross,1.9,399-A / 399-D
+Chokkasandra Cross,Dommasandra,2.1,399-A / 399-D
+Chandapura,Attibele,6.5,360 / 360K
+Attibele,Sarjapur,8.4,328 / 328H
+Bommasandra,Jigani,5.4,351M / 365P
+Jigani,Anekal,9.2,351M / 361C / 378A
+Jigani,Bannerghatta,10.5,365P / 378
+Bannerghatta,Gottigere,6.2,365 / 365J
+Gottigere,Meenakshi Mall,3.4,365 / 365P
+Meenakshi Mall,Bannerghatta Road,2.8,365 / 369N
+Bannerghatta Road,BTM Layout,3.1,365 / 600F
+BTM Layout,Dairy Circle,3.6,356CW / 365
+Dairy Circle,Lalbagh,2.9,356-M / KBS-3A / 365
+Lalbagh,City Market,1.8,356-M / KBS-3A / 210A
+Dairy Circle,Koramangala,3.4,171 / 340
+Koramangala,Domlur,3.1,201 / 201G
+Domlur,Indiranagar,2.6,201 / 330
+Indiranagar,MG Road,3.8,314 / 317
+MG Road,Shivajinagar,1.5,138 / 314E
+Shivajinagar,Majestic,3.2,138 / 139
+Majestic,Malleswaram,3.5,99A / 266
+Malleswaram,Yeshwanthpur,2.8,252 / 250
+Yeshwanthpur,Peenya,4.5,258 / 256
+Peenya,Jalahalli,3.2,258 / 258B
+Jalahalli,Dasarahalli,2.6,258
+Dasarahalli,Nagasandra,3.1,258
+Nagasandra,Madavara,3.5,258
+Madavara,Nelamangala,6.0,258 / 258B
+Majestic,Rajajinagar,4.2,80A / 252
+Rajajinagar,Vijayanagar,3.1,80 / 80A
+Vijayanagar,Nayandahalli,4.0,401B / 401K
+Nayandahalli,Kengeri,5.2,225C / 401
+Kengeri,Rajarajeshwari Nagar,3.8,225C
+Rajarajeshwari Nagar,Nayandahalli,3.8,225C
+Nayandahalli,Banashankari,5.6,401 / 401B
+Malleswaram,Rajajinagar,2.5,80A
+Yeshwanthpur,Hebbal,6.8,500A / 401K
+Hebbal,Yelahanka,8.5,402 / 285
+Yelahanka,KIA Airport,18.0,KIA-9 / KIA-8
+Hebbal,Nagawara,4.2,500A / 500D
+Nagawara,Kalyan Nagar,3.1,500A / 500D
+Kalyan Nagar,Banaswadi,2.8,300 / 300E
+Banaswadi,Shivajinagar,5.2,300
+Kalyan Nagar,Ramamurthy Nagar,3.4,500D
+Ramamurthy Nagar,KR Puram,3.8,500D
+KR Puram,Tin Factory,2.1,500D / 304
+Tin Factory,Indiranagar,4.5,314 / 317
+KR Puram,Mahadevapura,3.2,500D / 500K
+Mahadevapura,Marathahalli,3.5,500D / 500K
+Marathahalli,HAL,3.2,333P / 335E
+HAL,Domlur,3.6,333P / 335E
+Marathahalli,Kundalahalli,3.8,335E / 500F
+Kundalahalli,ITPL,4.2,335E / 500F
+ITPL,Whitefield,3.0,335E / 500F
+Whitefield,Kadugodi,3.6,335E
+Marathahalli,Bellandur,3.7,500D / 500K
+Bellandur,Devarabisanahalli,2.1,500D / 500K
+Devarabisanahalli,Sarjapur Road,2.4,500D / 342F
+Sarjapur Road,HSR Layout,3.5,500D / 342F
+HSR Layout,Silk Board,2.5,500D / 342F
+Sarjapur Road,Carmelaram,3.5,342F / 342H
+Carmelaram,Dommasandra,4.8,342F / 342
+Dommasandra,Sarjapur,6.2,342 / 342D
+Anekal,Attibele,11.3,328A / 360B

@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ theme }}">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Bengaluru Transit Navigator • SIH25013</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    /* Dark Theme Variables */
+    :root, [data-theme="dark"] {
+      --bg: #070d19;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-faint: #475569;
+      --input-bg: rgba(11, 19, 43, 0.8);
+      --input-border: rgba(255, 255, 255, 0.12);
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.3);
+      --chip-bg: rgba(255, 255, 255, 0.04);
+      --map-bg: #0B132B;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+    }
+
+    /* Light Theme Variables */
+    [data-theme="light"] {
+      --bg: #f1f5f9;
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --text-faint: #94a3b8;
+      --input-bg: #f8fafc;
+      --input-border: #cbd5e1;
+      --primary: #2563eb;
+      --primary-glow: rgba(37, 99, 235, 0.2);
+      --chip-bg: #f1f5f9;
+      --map-bg: #F8FAFC;
+      --accent-green: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-red: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 24px;
+      min-height: 100vh;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* Navigation Bar */
+    .navbar {
+      max-width: 1440px;
+      margin: 0 auto 24px auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 16px 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+
+    .brand h1 {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+    }
+
+    .brand p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge-sih {
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .theme-btn {
+      background: var(--chip-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 8px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .theme-btn:hover {
+      border-color: var(--primary);
+    }
+
+    /* Dashboard Layout: Responsive Grid */
+    .dashboard {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .glass-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    .input-group {
+      margin-bottom: 16px;
+    }
+
+    .input-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .input-box {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1.5px solid var(--input-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--text-main);
+      font-size: 15px; /* Minimum 16px or high zoom avoidance on iOS */
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .input-box:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px var(--primary-glow);
+    }
+
+    .quick-chips {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+      margin-bottom: 20px;
+    }
+
+    .chip {
+      background: var(--chip-bg);
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 7px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .chip:hover {
+      color: var(--text-main);
+      border-color: var(--primary);
+    }
+
+    .btn-compute {
+      width: 100%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 16px var(--primary-glow);
+      transition: all 0.2s ease;
+      touch-action: manipulation;
+    }
+
+    .btn-compute:active {
+      transform: scale(0.98);
+    }
+
+    .metric-row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .metric-card {
+      background: var(--chip-bg);
+      border: 1px solid var(--card-border);
+      padding: 12px 16px;
+      border-radius: 12px;
+    }
+
+    .metric-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .metric-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .route-timeline {
+      margin-top: 20px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .timeline-node {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+
+    .node-track {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .node-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .node-dot.origin { background: var(--accent-green); }
+    .node-dot.transfer { background: var(--accent-amber); }
+    .node-dot.destination { background: var(--accent-red); }
+
+    .node-line {
+      width: 2px;
+      flex: 1;
+      background: var(--card-border);
+      margin: 4px 0;
+    }
+
+    .node-details {
+      background: var(--chip-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      flex: 1;
+    }
+
+    .node-leg {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .tag-bus-num {
+      display: inline-block;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      color: var(--primary);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .tag-hop-dist {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: 8px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* Map Panel */
+    .map-panel {
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map-topbar {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .map-legends {
+      display: flex;
+      gap: 14px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot-sample {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .map-container {
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--map-bg);
+      overflow-x: auto; /* Allows smooth horizontal panning on phone */
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .map-container img {
+      width: 100%;
+      height: auto;
+      min-width: 600px; /* Guarantees map never compresses into an unreadable squish on mobile */
+      border-radius: 12px;
+      display: block;
+    }
+
+    /* ======================================================== */
+    /* RESPONSIVE MEDIA QUERIES (TABLETS & PHONES)              */
+    /* ======================================================== */
+    @media screen and (max-width: 1024px) {
+      body {
+        padding: 16px;
+      }
+      .dashboard {
+        grid-template-columns: 1fr; /* Switch to single-column vertical layout */
+        gap: 20px;
+      }
+      .map-panel {
+        order: 2; /* Put map below route selector on mobile */
+      }
+    }
+
+    @media screen and (max-width: 640px) {
+      body {
+        padding: 12px;
+      }
+      .navbar {
+        padding: 12px 16px;
+        margin-bottom: 16px;
+      }
+      .brand-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 18px;
+      }
+      .brand h1 {
+        font-size: 16px;
+      }
+      .brand p {
+        display: none; /* Hide subtitle to preserve mobile header space */
+      }
+      .glass-card {
+        padding: 18px;
+      }
+      .map-container img {
+        min-width: 520px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="brand">
+      <div class="brand-icon">🚌</div>
+      <div>
+        <h1>Transit Navigator</h1>
+        <p>Graph Theory & Algorithmic Route Engine</p>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="badge-sih">SIH25013</div>
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span id="theme-icon">{% if theme == 'light' %}🌙 Dark{% else %}☀️ Light{% endif %}</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Grid Dashboard -->
+  <div class="dashboard">
+
+    <!-- Form Panel -->
+    <div class="glass-card">
+      <div class="section-title">Route Configuration</div>
+
+      <form method="POST" action="/" id="routeForm">
+        <input type="hidden" name="theme" id="themeInput" value="{{ theme }}" />
+
+        <datalist id="stations-list">
+          {% for s in stations %}
+            <option value="{{ s }}"></option>
+          {% endfor %}
+        </datalist>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Origin Station</span>
+            <span style="color: var(--accent-green)">● Start</span>
+          </div>
+          <input 
+            type="text" 
+            list="stations-list" 
+            id="sourceInput" 
+            name="source" 
+            class="input-box" 
+            placeholder="Search origin stop..." 
+            value="{{ selected_source if selected_source else '' }}" 
+            autocomplete="off" 
+            required 
+          />
+        </div>
+
+        <div class="input-group">
+          <div class="input-label">
+            <span>Destination Station</span>
+            <span style="color: var(--accent-red)">● End</span>
+          </div>
+          <input 
+            type="text" 
+            list="stations-list" 
+            id="destInput" 
+            name="destination" 
+            class="input-box" 
+            placeholder="Search destination stop..." 
+            value="{{ selected_dest if selected_dest else '' }}" 
+            autocomplete="off" 
+            required 
+          />
+        </div>
+
+        <div class="quick-bar">
+          <span style="font-size: 11px; color: var(--text-faint); text-transform: uppercase; font-weight: 700;">Popular Corridors</span>
+          <div class="quick-chips">
+            <span class="chip" onclick="setCorridor('Majestic', 'Anekal')">Majestic &rarr; Anekal</span>
+            <span class="chip" onclick="setCorridor('Chandapura', 'Dommasandra')">Chandapura &rarr; Dommasandra</span>
+            <span class="chip" onclick="setCorridor('Yelahanka', 'Whitefield')">Yelahanka &rarr; Whitefield</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-compute">Compute Optimal Path &rarr;</button>
+      </form>
+
+      {% if error %}
+        <div style="margin-top:16px; color:#ef4444; font-size:13px; font-weight:600;">⚠️ {{ error }}</div>
+      {% endif %}
+
+      {% if segments %}
+        <div class="metric-row">
+          <div class="metric-card">
+            <div class="metric-title">Total Distance</div>
+            <div class="metric-value">{{ distance }} km</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title">Stops Traversed</div>
+            <div class="metric-value">{{ path|length }} Stops</div>
+          </div>
+        </div>
+
+        <div class="route-timeline">
+          {% for step in segments %}
+            <div class="timeline-node">
+              <div class="node-track">
+                <div class="node-dot {% if loop.first %}origin{% elif loop.last %}destination{% else %}transfer{% endif %}"></div>
+                {% if not loop.last %}<div class="node-line"></div>{% endif %}
+              </div>
+              <div class="node-details">
+                <div class="node-leg">{{ step.from }} &rarr; {{ step.to }}</div>
+                <div>
+                  <span class="tag-bus-num">{{ step.bus_number }}</span>
+                  <span class="tag-hop-dist">{{ step.distance }} km</span>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Map Visualization -->
+    <div class="glass-card map-panel">
+      <div class="map-topbar">
+        <div style="font-size: 13px; font-weight: 700;">Spatial Network Topology</div>
+        <div class="map-legends">
+          <div class="legend-item"><span class="dot-sample" style="background: var(--accent-green);"></span> Origin</div>
+          <div class="legend-item"><span class="dot-sample" style="background: var(--accent-amber);"></span> Transfer</div>
+          <div class="legend-item"><span class="dot-sample" style="background: var(--accent-red);"></span> Destination</div>
+        </div>
+      </div>
+      <div class="map-container">
+        {% if graph_img %}
+          <img src="data:image/png;base64,{{ graph_img }}" alt="Spatial Network Graph" />
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function toggleTheme() {
+      const current = document.documentElement.getAttribute('data-theme') || 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      
+      document.getElementById('themeInput').value = next;
+      const url = new URL(window.location.href);
+      url.searchParams.set('theme', next);
+      window.location.href = url.toString();
+    }
+
+    function setCorridor(origin, dest) {
+      document.getElementById('sourceInput').value = origin;
+      document.getElementById('destInput').value = dest;
+      document.getElementById('routeForm').submit();
+    }
+  </script>
+</body>
+</html>
